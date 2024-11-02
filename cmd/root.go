@@ -7,20 +7,50 @@ import (
 	"os"
 
 	"github.com/spf13/cobra"
+
+	"fmt"
 )
 
 // rootCmd represents the base command when called without any subcommands
 var rootCmd = &cobra.Command{
 	Use:   "todoApp",
 	Short: "An application to manage your todo list",
-	Long: `The application will help you Add, List, Update and Delete your todo list.
+	Long: `This application will help you Add, List, Update and Delete your todo list.
 	Example:
 	$tasks add "Buy milk"
 	$ tasks list
-ID    Task                                                Created
-1     Tidy up my desk                                     a minute ago
-3     Change my keyboard mapping to use escape/control    a few seconds ago
+	ID    Task                                                Created
+	1     Tidy up my desk                                     a minute ago
+	3     Change my keyboard mapping to use escape/control    a few seconds ago
 `,
+}
+
+var addCmd = &cobra.Command{
+	Use:   "add",
+	Short: "Add a new task to the list",
+	Long:  `This command will add a new task to the list.`,
+	Run: func(cmd *cobra.Command, args []string) {
+		if len(args) < 1 {
+			fmt.Println("Please provide the task to be added")
+			os.Exit(1)
+		}
+		task := args[0]
+		if err := AddTaskToCSV(task); err != nil {
+			fmt.Printf("Error adding task: %s\n", err)
+			os.Exit(1)
+		}
+		fmt.Printf("Task has been added: %s\n", task)
+	},
+}
+
+var listCmd = &cobra.Command{
+  Use:	 "list",
+  Short: "list all tasks in to-do list",
+	Run: func(cmd *cobra.Command, args []string) {
+		if err := PrintTaskTable(); err != nil {
+			fmt.Printf("Error displaying tasks: %v\n", err)
+		}
+	},
 }
 
 func Execute() {
@@ -40,4 +70,6 @@ func init() {
 	// Cobra also supports local flags, which will only run
 	// when this action is called directly.
 	rootCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
+	rootCmd.AddCommand(addCmd)
+	rootCmd.AddCommand(listCmd)
 }

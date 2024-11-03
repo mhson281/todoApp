@@ -18,10 +18,11 @@ var rootCmd = &cobra.Command{
 	Long: `This application will help you Add, List, Update and Delete your todo list.
 	Example:
 	$tasks add "Buy milk"
+  Task buy milk with ID #4 has been added to todo listTask has been added: buy milk
 	$ tasks list
-	ID    Task                                                Created
-	1     Tidy up my desk                                     a minute ago
-	3     Change my keyboard mapping to use escape/control    a few seconds ago
+	STATUS   ID    Task                                                
+	[ ]      1     Tidy up my desk                                    
+	[ ]			 2     Change my keyboard mapping to use escape/control
 `,
 }
 
@@ -59,12 +60,27 @@ var markCompleteCmd = &cobra.Command {
 		if len(args) < 1 {
 			fmt.Println("Please provide the task id to be marked completed")
 		}
-		taskId := args[0]
-		if err := MarkTaskComplete(taskId); err != nil {
-			fmt.Printf("Unable to mark task ID #%s as completed\n", taskId)
+		taskID := args[0]
+		if err := MarkTaskComplete(taskID); err != nil {
+			fmt.Printf("Unable to mark task ID #%s as completed\n", taskID)
 		}
 	},
 }
+
+var removeCmd = &cobra.Command {
+		Use: "remove",
+		Short: "remove the task with the provided taskID",
+		Run: func (cmd *cobra.Command, args []string) {
+			if len(args) < 1 {
+				fmt.Println("Please provide the task id to be removed")
+			}
+			
+			taskID := args[0]
+			if err := RemoveTask(taskID); err != nil {
+					fmt.Printf("Unable to remove task ID #%s as completed.\n", taskID)
+			}
+		},
+	}
 
 func Execute() {
 	err := rootCmd.Execute()
@@ -86,4 +102,5 @@ func init() {
 	rootCmd.AddCommand(addCmd)
 	rootCmd.AddCommand(listCmd)
 	rootCmd.AddCommand(markCompleteCmd)
+	rootCmd.AddCommand(removeCmd)
 }

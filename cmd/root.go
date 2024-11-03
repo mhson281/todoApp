@@ -27,8 +27,7 @@ var rootCmd = &cobra.Command{
 
 var addCmd = &cobra.Command{
 	Use:   "add",
-	Short: "Add a new task to the list",
-	Long:  `This command will add a new task to the list.`,
+	Short: "add a new task to the list",
 	Run: func(cmd *cobra.Command, args []string) {
 		if len(args) < 1 {
 			fmt.Println("Please provide the task to be added")
@@ -53,6 +52,20 @@ var listCmd = &cobra.Command{
 	},
 }
 
+var markCompleteCmd = &cobra.Command {
+	Use: "complete",
+	Short: "mark task with provided ID as complete",
+	Run: func (cmd *cobra.Command, args []string) {
+		if len(args) < 1 {
+			fmt.Println("Please provide the task id to be marked completed")
+		}
+		taskId := args[0]
+		if err := MarkTaskComplete(taskId); err != nil {
+			fmt.Printf("Unable to mark task ID #%s as completed\n", taskId)
+		}
+	},
+}
+
 func Execute() {
 	err := rootCmd.Execute()
 	if err != nil {
@@ -72,4 +85,5 @@ func init() {
 	rootCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
 	rootCmd.AddCommand(addCmd)
 	rootCmd.AddCommand(listCmd)
+	rootCmd.AddCommand(markCompleteCmd)
 }

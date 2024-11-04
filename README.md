@@ -79,15 +79,15 @@ Mark a task as complete by specifying its ID. The status will change from [ ] to
 
 ```bash
 ./todoApp complete <taskID>
+
 ```
 
 Example:
 
-```
+```bash
 ./todoApp complete 5
 
-```bash
-
+```
 
 Output:
 
@@ -96,23 +96,22 @@ Output:
 Taskd ID #5 has been marked as complete.
 ```
 
-
 ### 4. Remove a Task
 
 Remove a task from the to-do list by its ID.
 
-```
+```bash
 ./todoApp remove <taskID>
 
-```bash
+```
 
 
 Example:
 
-```
+```bash
 ./todoApp remove 5
 
-```bash
+```
 
 
 Output:
@@ -125,11 +124,9 @@ Task ID #5 has been removed.
 
 Clear all tasks from the to-do list, leaving it empty.
 
-```
-./todoApp clear
 ```bash
-
-
+./todoApp clear
+```
 Output:
 
 ```
@@ -147,7 +144,7 @@ All tasks have been cleared from the to-do list.
 
 File Structure
 
-```
+```plaintext
 .
 ├── main.go           # Entry point for the CLI app
 ├── cmd               # Directory for Cobra commands
@@ -158,7 +155,7 @@ File Structure
 │   └── clear.go      # Code for the "clear" command
 └── tasks.csv         # CSV file where tasks are stored
 
-```plaintext
+```
 
 
 Contributing

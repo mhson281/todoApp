@@ -82,6 +82,17 @@ var removeCmd = &cobra.Command {
 		},
 	}
 
+var clearCmd = &cobra.Command {
+	Use: "clear",
+	Short: "clear all tasks in the to-do list",
+	Run: func(cmd *cobra.Command, args []string) {
+		err := ClearToDoList()
+		if err != nil {
+			fmt.Println("Unable to clear to-do list")
+		}
+	},
+}
+
 func Execute() {
 	err := rootCmd.Execute()
 	if err != nil {
@@ -103,4 +114,5 @@ func init() {
 	rootCmd.AddCommand(listCmd)
 	rootCmd.AddCommand(markCompleteCmd)
 	rootCmd.AddCommand(removeCmd)
+	rootCmd.AddCommand(clearCmd)
 }

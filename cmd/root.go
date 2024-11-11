@@ -5,6 +5,7 @@ package cmd
 
 import (
 	"os"
+	"strings"
 
 	"github.com/spf13/cobra"
 
@@ -34,7 +35,7 @@ var addCmd = &cobra.Command{
 			fmt.Println("Please provide the task to be added")
 			os.Exit(1)
 		}
-		task := args[0]
+		task := strings.Join(args, " ")
 		if err := AddTaskToCSV(task); err != nil {
 			fmt.Printf("Error adding task: %s\n", err)
 			os.Exit(1)
